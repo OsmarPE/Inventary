@@ -23,3 +23,9 @@ export async function updateProduct(id,product) {
     const { data, error } = await supabase.from('productos').update({  producto, cantidad, fecha, precio, faltantes, minimo, ventas, mensaje }).eq('id', id).select()
     return { data, error }
 }
+
+export async function getProduct(dateProp) {
+    console.log(dateProp);
+    const { data } = await supabase.from('productos').select('*').eq('fecha',dateProp)
+    return data
+}

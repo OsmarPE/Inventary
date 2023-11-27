@@ -4,6 +4,8 @@ import Table from './Components/Table'
 import TableItem from './Components/TableItem'
 import { useEffect, useState } from 'react'
 import { setProduct, supabase, updateProduct } from './supabase/db'
+import Loading from './Components/Loading'
+import { datesProducts } from './utils/helper'
 
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
   const [showModal, setShowModal] = useState(false)
   const [id, setid] = useState(null)
   const [titleModal, settitleModal] = useState('')
+  const [loading, setLoading] = useState(false)
   const [productoObj, setproductoObj] = useState({
     id:'',
     producto: '',
@@ -28,9 +31,11 @@ function App() {
 
 
     const getData = async () => {
+      setLoading(true)
       let { data: productos } = await supabase.from('productos').select('*')
       console.log(productos);
       setProductos(productos);
+      setLoading(false)
     }
 
     getData()
@@ -94,29 +99,27 @@ function App() {
 
 
   return (
-    <div className='app'>
-      <aside className='aside'>
-        <div className="aside__item">
-          <i className="ri-draggable"></i>
-        </div>
-        <ul className="aside__list">
-          <li className="aside__list--item"><button className='aside__list--btn'><i className="ri-search-line"></i></button></li>
-          <li className="aside__list--item"><button className='aside__list--btn active'><i className="ri-layout-2-line"></i></button></li>
-          <li className="aside__list--item"><button className='aside__list--btn'><i className="ri-settings-2-line"></i></button></li>
-        </ul>
-      </aside>
+    <>
+      
       <main className='main'>
 
         <header className='header'>
           <h1 className="header__title"> STOCK <span className="header__title--bold">IA</span> </h1>
           <button className="header__btn btn" onClick={() => showModalCurrent('Añadir Producto')}> <i className="ri-add-line"></i>Añadir</button>
         </header>
-        <Table>
-          {
-            productos.map(producto => <TableItem editProduct={editProduct} setid={setid} product={producto} key={producto.id} />)
-          }
 
-        </Table>
+        {
+          !loading ? (
+
+            <Table>
+              {
+                productos.map(producto => <TableItem editProduct={editProduct} setid={setid} product={producto} key={producto.id} />)
+              }
+
+            </Table>
+
+          ) : <Loading/>
+        }
       </main>
       {showModal && (
         <div className="modal">
@@ -138,7 +141,13 @@ function App() {
                 </div>
                 <div className="form__item">
                     <label htmlFor="fecha">fecha</label>
-                  <input type="text" value={productoObj.fecha}  onChange={handleChange} name='fecha' id='fecha' placeholder='Ingrese un fecha' />
+                    <select className='form__input' name="fecha" id="fecha" value={productoObj.fecha} onChange={handleChange}>
+                      <option value="">Fecha</option>
+                      {
+                        datesProducts.map(item => <option key={item.date} value={item.date}>{item.product}</option>)
+                      }
+                    </select>
+                  {/* <input type="text" value={productoObj.fecha}  onChange={handleChange} name='fecha' id='fecha' placeholder='Ingrese un fecha' /> */}
 
                 </div>
                 <div className="form__item">
@@ -174,7 +183,7 @@ function App() {
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
