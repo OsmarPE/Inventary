@@ -95,8 +95,12 @@ ul {
 .header,
 .table {
   width: 90%;
-  max-width: 1300px;
+  max-width: 1120px;
   margin: 0 auto;
+}
+
+.table{
+  min-height: 444px;
 }
 
 .header {
@@ -144,9 +148,7 @@ ul {
 
 .table {
   margin-top: 2rem;
-  background-color: var(--color-white-100);
   border-radius: 0.5rem;
-  background: var(--color-white-100);
   box-shadow: 0px 4px 33px 0px rgba(149, 149, 149, 0.04);
 }
 
@@ -174,7 +176,7 @@ ul {
 .table__thead-title,
 .table__tbody--item {
   flex: 1;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   text-align: center;
 }
 
@@ -198,6 +200,7 @@ ul {
 
 .table__tbody--item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
@@ -374,4 +377,31 @@ ul {
 .search__text span{
   color: #242E3C;
   font-weight: 600;
+}
+
+.pagination{
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination__btn{
+  width: 2.5rem;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  color: #475160;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.pagination__btn:hover{
+  border-color: #d6d7da;
+}
+
+.pagination__btn.active{
+  border-color: #6e7379;
 }

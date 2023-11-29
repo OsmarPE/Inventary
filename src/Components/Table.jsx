@@ -12,7 +12,7 @@ function Table({children}) {
                 <p className='table__thead-title'> PRODUCTOS RESTANTES</p>
                 <p className='table__thead-title'>MINIMO </p>
                 <p className='table__thead-title'>VENTAS </p>
-                <p className='table__thead-title'>MENSAJE</p>
+                {/* <p className='table__thead-title'>MENSAJE</p> */}
                 <p className='table__thead-title'>ACTIONS</p>
             </div>
             {children}

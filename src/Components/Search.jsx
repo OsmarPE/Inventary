@@ -9,21 +9,24 @@ function Search() {
     const [date, setDate] = useState('')
     const [productos, setproductos] = useState([])
 
-    const text = productos.length > 1 ? 'Pproductos disponibles' : 'producto disponible'
+    const text = productos.length > 1 ? 'productos disponibles' : 'producto disponible'
 
 
     async function hanledSubmit(e) {
         e.preventDefault()
 
         if (!date) return
-
+        
         const data = await getProduct(date)
+        
+        toast.info(`Hay un evento cercano: ${datesProducts.find(p => p.date === date).product}`)
+        
         data.length > 0 && data.forEach(item => {
             const {cantidad,ventas, minimo, producto} = item
             const productsRest = (cantidad - ventas)
             const isMinimo = productsRest <= minimo
             if (isMinimo) {
-                toast.info(`Llenar inventario de ${producto}, el minimo es ${minimo} unidades`)
+                toast.error(`Llenar inventario de ${producto}, el minimo es ${minimo} unidades`)
             }
         } )
 
@@ -34,7 +37,7 @@ function Search() {
 
     return (
         <div className="main">
-            <Toaster position="bottom-right" richColors  duration={5000} expand={true} />
+            <Toaster position="bottom-right" richColors  duration={10000} expand={true} />
             <form className="search" onSubmit={hanledSubmit}>
                 <div className="search__item">
 

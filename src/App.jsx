@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { setProduct, supabase, updateProduct } from './supabase/db'
 import Loading from './Components/Loading'
 import { datesProducts } from './utils/helper'
+import Pagination from './Components/Pagination'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [id, setid] = useState(null)
   const [titleModal, settitleModal] = useState('')
   const [loading, setLoading] = useState(false)
+  const [pag, setPag] = useState(0)
   const [productoObj, setproductoObj] = useState({
     id:'',
     producto: '',
@@ -113,13 +115,15 @@ function App() {
 
             <Table>
               {
-                productos.map(producto => <TableItem editProduct={editProduct} setid={setid} product={producto} key={producto.id} />)
+                productos.slice(6 * pag,6 * (pag + 1)).map(producto => <TableItem editProduct={editProduct} setid={setid} product={producto} key={producto.id} />)
               }
 
             </Table>
 
           ) : <Loading/>
         }
+
+        {productos.length > 0 && <Pagination length={Math.ceil(productos.length / 6) } pag={pag} setPag={setPag}/> }
       </main>
       {showModal && (
         <div className="modal">

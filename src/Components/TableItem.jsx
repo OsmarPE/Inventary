@@ -22,7 +22,7 @@ function TableItem({product,setid,editProduct,showActions = true}) {
             <p className='table__tbody--item'>{productsRest}</p>
             <p className={isMinimo ? 'table__tbody--item error':'table__tbody--item'}>{minimo}</p>
             <p className='table__tbody--item'>{ventas}</p>
-            <p className='table__tbody--item'>{mensaje}</p>
+            {/* <p className='table__tbody--item'>{mensaje}</p> */}
             <div className='table__tbody--item table__tbody--actions'>
             
                { showActions && <button><i className="ri-more-2-fill" onClick={() => setActions( prevState => !prevState)}></i></button>}
